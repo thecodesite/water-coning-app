@@ -101,7 +101,7 @@ def main():
     # Add the copyright message at the bottom
     st.markdown(
         '<div style="text-align: center; font-size: small; color: gray;">'
-        'Contact: Jose Perez Garcia (www.linkedin.com/in/perezjgg))'
+        'Contact: Jose Perez Garcia (www.linkedin.com/in/perezjgg)'
         '</div>',
         unsafe_allow_html=True
     )
