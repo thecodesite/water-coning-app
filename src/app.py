@@ -58,6 +58,7 @@ def main():
         h = st.sidebar.number_input("Formation Thickness (h) [ft]", value=50.0)
         hp = st.sidebar.number_input("Cano Thickness (hp) [ft]", value=15.0)
         mu = st.sidebar.number_input("Fluid Viscosity (mu) [cP]", value=0.73)
+        rw = st.sidebar.number_input("Well Radius (rw) [ft]", value=0.25)
         re = st.sidebar.number_input("Drainage Radius (re) [ft]", value=1000.0)
         Deno = st.sidebar.number_input("Oil Density (Deno) [lb/ft³]", value=47.5)
         Denw = st.sidebar.number_input("Water Density (Denw) [lb/ft³]", value=63.76)
@@ -90,7 +91,7 @@ def main():
             result = schols(ko, h, hp, mu, rw, re, Denw, Deno, Bo)
             st.success(f"Critical Flow Rate (Qoc): {result:.2f} (STB/d)")
         elif method == "Muskat & Wyckoff":
-            result = muskat_wyckoff(ko, h, hp, mu, re, Denw, Deno, Bo)
+            result = muskat_wyckoff(ko, h, hp, mu, re, Denw, Deno, Bo, rw)
             st.success(f"Critical Flow Rate (Qoc): {result:.2f} (STB/d)")
         elif method == "Sobocinski & Cornelius":
             Tbt, Qoc = sobocinski_cornelius(kh, h, hp, mu, rw, re, Denw, Deno, Bo, Qo, kro, krw, mw, phi)
