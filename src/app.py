@@ -98,5 +98,13 @@ def main():
             Tbt, Qoc = sobocinski_cornelius(kh, h, hp, mu, rw, re, Denw, Deno, Bo, Qo, kro, krw, mw, phi, kv)
             st.success(f"Critical Flow Rate (Qoc): {Qoc:.2f} (STB/d), Time W: {Tbt:.2f} (days)")
 
+    # Add the copyright message at the bottom
+    st.markdown(
+        '<div style="text-align: center; font-size: small; color: gray;">'
+        'Contact: Jose Perez Garcia (www.linkedin.com/in/perezjgg))'
+        '</div>',
+        unsafe_allow_html=True
+    )
+
 if __name__ == "__main__":
     main()
