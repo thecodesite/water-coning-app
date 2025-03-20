@@ -94,7 +94,7 @@ def main():
             result = muskat_wyckoff(ko, h, hp, mu, re, Denw, Deno, Bo, rw)
             st.success(f"Critical Flow Rate (Qoc): {result:.2f} (STB/d)")
         elif method == "Sobocinski & Cornelius":
-            Tbt, Qoc = sobocinski_cornelius(kh, h, hp, mu, rw, re, Denw, Deno, Bo, Qo, kro, krw, mw, phi)
+            Tbt, Qoc = sobocinski_cornelius(kh, h, hp, mu, rw, re, Denw, Deno, Bo, Qo, kro, krw, mw, phi, kv)
             st.success(f"Critical Flow Rate (Qoc): {Qoc:.2f} (STB/d), Time W: {Tbt:.2f} (days)")
 
 if __name__ == "__main__":
