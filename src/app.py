@@ -22,7 +22,7 @@ def main():
 
     if method == "Meyer & Gardner":
         ko = st.sidebar.number_input("Effective Permeability (ko) [mD]", value=93.5)
-        h = st.sidebar.number_input("Formation Thickness (h) [ft]", value=50.0)
+        h = st.sidebar.number_input("Formation Thickness (h) [ft]", value=40.0)
         hp = st.sidebar.number_input("Perforated Thickness (hp) [ft]", value=15.0)
         mu = st.sidebar.number_input("Fluid Viscosity (mu) [cP]", value=0.73)
         Bo = st.sidebar.number_input("Oil Volume Factor (Bo) [bbl/STB]", value=1.1)
