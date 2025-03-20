@@ -4,8 +4,7 @@ from utils.calculations import (
     chaperson,
     schols,
     muskat_wyckoff,
-    sobocinski_cornelius,
-    chaney_et_al
+    sobocinski_cornelius
 )
 
 def main():
