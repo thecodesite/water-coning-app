@@ -9,8 +9,8 @@ def chaperson(kh, kv, h, hp, mu, Bo, Denw, Deno, re):
 def schols(ko, h, hp, mu, rw, re, Denw, Deno, Bo):
     return (0.00000783 * (Denw - Deno) * ko * ((pow((h), 2)) - (pow((hp), 2))) / (mu * Bo) * (0.432 + 3.142 / (np.log(re / rw))) * (pow(h / re, 0.14)))
 
-def muskat_wyckoff(ko, h, hp, mu, re, Denw, Deno, Bo):
-    return (0.0000924 * (((Denw - Deno) * ko) * (pow((1 - (pow((hp / h), 2)), 1.325)) / (mu * Bo)) * (pow(h, 2.238)) * pow((np.log(re)), -1.99)))
+def muskat_wyckoff(ko, h, hp, mu, re, Denw, Deno, Bo, rw):
+    return (0.0000924 * (((Denw - Deno) * ko) * (pow((1 - (pow((hp / h), 2))), 1.325)) / (mu * Bo)) * (pow(h, 2.238)) * pow((np.log(re / rw)), -1.99))
 
 def sobocinski_cornelius(kh, h, hp, mu, rw, re, Denw, Deno, Bo, Qo, kro, krw, mw, phi):
     Z = 0.0000492 * (Denw - Deno) * kh * h * (h - hp) / (mu * Bo * Qo)
