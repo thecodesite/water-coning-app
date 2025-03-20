@@ -25,6 +25,3 @@ def sobocinski_cornelius(kh, h, hp, mu, rw, re, Denw, Deno, Bo, Qo, kro, krw, mw
     Qoc_sobocinski_cornelius = 0.0000141 * ((Denw - Deno) * kh * h * (h - hp)) / (mu * Bo)
 
     return Tbt, Qoc_sobocinski_cornelius
-
-def chaney_et_al(k, h, mu, rw, rc, phi, sw):
-    return (0.000055288 * k * h * (1 - sw) / (phi * mu * np.log(rc / rw)))
