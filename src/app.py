@@ -66,6 +66,7 @@ def main():
 
     elif method == "Sobocinski & Cornelius":
         kh = st.sidebar.number_input("Horizontal Permeability (kh) [mD]", value=93.0)
+        kv = st.sidebar.number_input("Vertical Permeability (kv) [mD]", value=9.0)
         h = st.sidebar.number_input("Formation Thickness (h) [ft]", value=50.0)
         hp = st.sidebar.number_input("Cano Thickness (hp) [ft]", value=15.0)
         mu = st.sidebar.number_input("Fluid Viscosity (mu) [cP]", value=0.73)
