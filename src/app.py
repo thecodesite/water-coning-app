@@ -21,12 +21,12 @@ def main():
     st.sidebar.header("Input Parameters")
 
     if method == "Meyer & Gardner":
-        ko = st.sidebar.number_input("Effective Permeability (ko) [mD]", value=93.0)
+        ko = st.sidebar.number_input("Effective Permeability (ko) [mD]", value=93.5)
         h = st.sidebar.number_input("Formation Thickness (h) [ft]", value=50.0)
         hp = st.sidebar.number_input("Perforated Thickness (hp) [ft]", value=15.0)
         mu = st.sidebar.number_input("Fluid Viscosity (mu) [cP]", value=0.73)
         Bo = st.sidebar.number_input("Oil Volume Factor (Bo) [bbl/STB]", value=1.1)
-        re = st.sidebar.number_input("Drainage Radius (re) [ft]", value=1000.0)
+        re = st.sidebar.number_input("Drainage Radius (re) [ft]", value=660.0)
         rw = st.sidebar.number_input("Well Radius (rw) [ft]", value=0.25)
         Deno = st.sidebar.number_input("Oil Density (Deno) [lb/ft³]", value=47.5)
         Denw = st.sidebar.number_input("Water Density (Denw) [lb/ft³]", value=63.76)
