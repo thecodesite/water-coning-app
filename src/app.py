@@ -16,8 +16,7 @@ def main():
         "Chaperson",
         "Schols",
         "Muskat & Wyckoff",
-        "Sobocinski & Cornelius",
-        "Chaney et al"
+        "Sobocinski & Cornelius"
     ])
 
     st.sidebar.header("Input Parameters")
@@ -81,15 +80,6 @@ def main():
         mw = st.sidebar.number_input("Water Viscosity (mw) [cP]", value=1.0)
         phi = st.sidebar.number_input("Porosity (phi)", value=0.13)
 
-    elif method == "Chaney et al":
-        k = st.sidebar.number_input("Permeability (k) [mD]", value=93.0)
-        h = st.sidebar.number_input("Formation Thickness (h) [ft]", value=50.0)
-        mu = st.sidebar.number_input("Fluid Viscosity (mu) [cP]", value=0.73)
-        rw = st.sidebar.number_input("Well Radius (rw) [ft]", value=0.25)
-        rc = st.sidebar.number_input("Coning Radius (rc) [ft]", value=100.0)
-        phi = st.sidebar.number_input("Porosity (phi)", value=0.13)
-        sw = st.sidebar.number_input("Water Saturation (sw)", value=0.3)
-
     if st.button("Run"):
         if method == "Meyer & Gardner":
             result = meyer_gardner(ko, h, hp, mu, Bo, re, rw, Deno, Denw)
@@ -106,9 +96,6 @@ def main():
         elif method == "Sobocinski & Cornelius":
             Tbt, Qoc = sobocinski_cornelius(kh, h, hp, mu, rw, re, Denw, Deno, Bo, Qo, kro, krw, mw, phi)
             st.success(f"Critical Flow Rate (Qoc): {Qoc:.2f} (STB/d), Time W: {Tbt:.2f} (days)")
-        elif method == "Chaney et al":
-            result = chaney_et_al(k, h, mu, rw, rc, phi, sw)
-            st.success(f"Critical Flow Rate (Qoc): {result:.2f} (STB/d)")
 
 if __name__ == "__main__":
     main()
