@@ -1,3 +1,4 @@
+import numpy as np
 def meyer_gardner(ko, h, hp, mu, Bo, re, rw, Deno, Denw):
     return (0.0000246 * ((Denw - Deno) / (np.log(re / rw)))) * (ko / (mu * Bo)) * ((pow((h), 2)) - (pow((hp), 2)))
 
