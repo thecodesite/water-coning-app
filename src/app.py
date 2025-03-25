@@ -202,7 +202,14 @@ def main():
                 fig, ax = plt.subplots(figsize=(10, 6))
 
                 # Plot data for the selected well
-                ax.bar(
+                #ax.bar(
+                #    chart_data["Method"], 
+                #    chart_data["Critical Flow Rate"], 
+                #    color="skyblue"
+                #)
+
+                # Plot data for the selected well
+                bars = ax.bar(
                     chart_data["Method"], 
                     chart_data["Critical Flow Rate"], 
                     color="skyblue"
