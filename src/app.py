@@ -171,13 +171,13 @@ def main():
                 value_vars=["Meyer & Gardner", "Chaperson", "Schols", "Muskat & Wyckoff"],
                 var_name="Method", value_name="Critical Flow Rate"
             )
-            fig, ax = plt.subplots(figsize=(10, 6))
-            for well, group in chart_data.groupby("Well"):
-                ax.bar(group["Method"], group["Critical Flow Rate"], label=well)
-            ax.set_ylabel("Critical Flow Rate (STB/d)")
-            ax.set_title("Critical Flow Rate by Method")
-            ax.legend(title="Well")
-            st.pyplot(fig)
+            #fig, ax = plt.subplots(figsize=(10, 6))
+            #for well, group in chart_data.groupby("Well"):
+            #    ax.bar(group["Method"], group["Critical Flow Rate"], label=well)
+            #ax.set_ylabel("Critical Flow Rate (STB/d)")
+            #ax.set_title("Critical Flow Rate by Method")
+            #ax.legend(title="Well")
+            #st.pyplot(fig)
 
     # Add the copyright message at the bottom
     st.markdown(
