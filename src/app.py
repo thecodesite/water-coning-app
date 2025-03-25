@@ -165,21 +165,52 @@ def main():
                     mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
                 )
 
-            # Generate bar chart
-            st.subheader("Bar Chart of Results")
+            # Generate bar chart           
+            #st.subheader("Bar Chart of Results")
+            #chart_data = df.melt(
+            #    id_vars=["Well"], 
+            #    value_vars=["Meyer & Gardner", "Chaperson", "Schols", "Muskat & Wyckoff"],
+            #    var_name="Method", value_name="Critical Flow Rate"
+            #)
+            #fig, ax = plt.subplots(figsize=(10, 6))
+            #for well, group in chart_data.groupby("Well"):
+            #    ax.bar(group["Method"], group["Critical Flow Rate"], label=well)
+            #ax.set_ylabel("Critical Flow Rate (STB/d)")
+            #ax.set_title("Critical Flow Rate by Method")
+            #ax.legend(title="Well")
+            #st.pyplot(fig)
+
+            # Generate bar chart grouped by well
+            st.subheader("Bar Chart of Results by Well")
             chart_data = df.melt(
                 id_vars=["Well"], 
                 value_vars=["Meyer & Gardner", "Chaperson", "Schols", "Muskat & Wyckoff"],
                 var_name="Method", value_name="Critical Flow Rate"
             )
-            fig, ax = plt.subplots(figsize=(10, 6))
-            for well, group in chart_data.groupby("Well"):
-                ax.bar(group["Method"], group["Critical Flow Rate"], label=well)
-            ax.set_ylabel("Critical Flow Rate (STB/d)")
-            ax.set_title("Critical Flow Rate by Method")
-            ax.legend(title="Well")
-            st.pyplot(fig)
 
+            try:
+                # Create the figure and axes
+                fig, ax = plt.subplots(figsize=(12, 8))
+
+                # Plot data grouped by well
+                for well, group in chart_data.groupby("Well"):
+                    ax.bar(
+                        group["Method"], 
+                        group["Critical Flow Rate"], 
+                        label=well
+                    )
+
+                # Customize the chart
+                ax.set_ylabel("Critical Flow Rate (STB/d)")
+                ax.set_xlabel("Method")
+                ax.set_title("Critical Flow Rate by Method for Each Well")
+                ax.legend(title="Well", loc="upper left", bbox_to_anchor=(1, 1))  # Move legend outside the chart
+                plt.xticks(rotation=45)  # Rotate x-axis labels for better readability
+
+                # Display the chart in Streamlit
+                st.pyplot(fig)
+            except Exception as e:
+                st.error(f"An error occurred while generating the bar chart: {e}")
     # Add the copyright message at the bottom
     st.markdown(
         '<div style="text-align: center; font-size: small; color: gray;">'
