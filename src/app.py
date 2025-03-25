@@ -1,3 +1,5 @@
+import pandas as pd
+import matplotlib.pyplot as plt
 import streamlit as st
 from utils.calculations import (
     meyer_gardner,
@@ -6,6 +8,51 @@ from utils.calculations import (
     muskat_wyckoff,
     sobocinski_cornelius
 )
+def process_uploaded_file(file):
+    # Read the uploaded Excel file
+    df = pd.read_excel(file)
+
+    # Ensure required columns are present
+    required_columns = [
+        "Well", "hp (feet)", "h (feet)", "kho (mD)", "kvo (mD)", 
+        "Oil visc (cP)", "Bo (bbl/STB)", "re (feet)", "rw (feet)", 
+        "Oil den (lb/feet3)", "Water den (lb/feet3)"
+    ]
+    if not all(col in df.columns for col in required_columns):
+        st.error("Uploaded file is missing required columns.")
+        return None
+
+    # Add columns for results
+    df["Meyer & Gardner"] = df.apply(
+        lambda row: meyer_gardner(
+            row["kho (mD)"], row["h (feet)"], row["hp (feet)"], 
+            row["Oil visc (cP)"], row["Bo (bbl/STB)"], row["re (feet)"], 
+            row["rw (feet)"], row["Oil den (lb/feet3)"], row["Water den (lb/feet3)"]
+        ), axis=1
+    )
+    df["Chaperson"] = df.apply(
+        lambda row: chaperson(
+            row["kho (mD)"], row["kvo (mD)"], row["h (feet)"], 
+            row["hp (feet)"], row["Oil visc (cP)"], row["Bo (bbl/STB)"], 
+            row["Water den (lb/feet3)"], row["Oil den (lb/feet3)"], row["re (feet)"]
+        ), axis=1
+    )
+    df["Schols"] = df.apply(
+        lambda row: schols(
+            row["kho (mD)"], row["h (feet)"], row["hp (feet)"], 
+            row["Oil visc (cP)"], row["rw (feet)"], row["re (feet)"], 
+            row["Water den (lb/feet3)"], row["Oil den (lb/feet3)"], row["Bo (bbl/STB)"]
+        ), axis=1
+    )
+    df["Muskat & Wyckoff"] = df.apply(
+        lambda row: muskat_wyckoff(
+            row["kho (mD)"], row["h (feet)"], row["hp (feet)"], 
+            row["Oil visc (cP)"], row["re (feet)"], row["Water den (lb/feet3)"], 
+            row["Oil den (lb/feet3)"], row["Bo (bbl/STB)"], row["rw (feet)"]
+        ), axis=1
+    )
+
+    return df
 
 def main():
     st.title("Water Coning Critical Flow Rate Calculator")
@@ -97,6 +144,41 @@ def main():
         elif method == "Sobocinski & Cornelius":
             Tbt, Qoc = sobocinski_cornelius(kh, h, hp, mu, rw, re, Denw, Deno, Bo, Qo, kro, krw, mw, phi, kv)
             st.success(f"Critical Flow Rate (Qoc): {Qoc:.2f} (STB/d), Time W: {Tbt:.2f} (days)")
+    st.header("Batch Processing via Excel File")
+    uploaded_file = st.file_uploader("Upload Excel File", type=["xlsx"])
+    if uploaded_file:
+        df = process_uploaded_file(uploaded_file)
+        if df is not None:
+            st.success("File processed successfully!")
+            
+            # Display the dataframe
+            st.dataframe(df)
+
+            # Download link for the processed file
+            output_file = "processed_results.xlsx"
+            df.to_excel(output_file, index=False)
+            with open(output_file, "rb") as f:
+                st.download_button(
+                    label="Download Results",
+                    data=f,
+                    file_name="processed_results.xlsx",
+                    mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                )
+
+            # Generate bar chart
+            st.subheader("Bar Chart of Results")
+            chart_data = df.melt(
+                id_vars=["Well"], 
+                value_vars=["Meyer & Gardner", "Chaperson", "Schols", "Muskat & Wyckoff"],
+                var_name="Method", value_name="Critical Flow Rate"
+            )
+            fig, ax = plt.subplots(figsize=(10, 6))
+            for well, group in chart_data.groupby("Well"):
+                ax.bar(group["Method"], group["Critical Flow Rate"], label=well)
+            ax.set_ylabel("Critical Flow Rate (STB/d)")
+            ax.set_title("Critical Flow Rate by Method")
+            ax.legend(title="Well")
+            st.pyplot(fig)
 
     # Add the copyright message at the bottom
     st.markdown(
