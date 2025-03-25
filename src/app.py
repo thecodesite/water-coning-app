@@ -180,9 +180,18 @@ def main():
             #ax.legend(title="Well")
             #st.pyplot(fig)
 
-            # Generate bar chart grouped by well
+            # Generate bar chart grouped by well with well selection
             st.subheader("Bar Chart of Results by Well")
-            chart_data = df.melt(
+
+            # Allow the user to select a specific well
+            wells = df["Well"].unique()
+            selected_well = st.selectbox("Select Well to Display", wells)
+
+            # Filter data for the selected well
+            filtered_data = df[df["Well"] == selected_well]
+
+            # Prepare data for the chart
+            chart_data = filtered_data.melt(
                 id_vars=["Well"], 
                 value_vars=["Meyer & Gardner", "Chaperson", "Schols", "Muskat & Wyckoff"],
                 var_name="Method", value_name="Critical Flow Rate"
@@ -190,21 +199,19 @@ def main():
 
             try:
                 # Create the figure and axes
-                fig, ax = plt.subplots(figsize=(12, 8))
+                fig, ax = plt.subplots(figsize=(10, 6))
 
-                # Plot data grouped by well
-                for well, group in chart_data.groupby("Well"):
-                    ax.bar(
-                        group["Method"], 
-                        group["Critical Flow Rate"], 
-                        label=well
-                    )
+                # Plot data for the selected well
+                ax.bar(
+                    chart_data["Method"], 
+                    chart_data["Critical Flow Rate"], 
+                    color="skyblue"
+                )
 
                 # Customize the chart
                 ax.set_ylabel("Critical Flow Rate (STB/d)")
                 ax.set_xlabel("Method")
-                ax.set_title("Critical Flow Rate by Method for Each Well")
-                ax.legend(title="Well", loc="upper left", bbox_to_anchor=(1, 1))  # Move legend outside the chart
+                ax.set_title(f"Critical Flow Rate by Method for Well: {selected_well}")
                 plt.xticks(rotation=45)  # Rotate x-axis labels for better readability
 
                 # Display the chart in Streamlit
