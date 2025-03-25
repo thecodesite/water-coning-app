@@ -208,6 +208,18 @@ def main():
                     color="skyblue"
                 )
 
+                # Add labels to each bar
+                for bar in bars:
+                    height = bar.get_height()
+                    ax.text(
+                        bar.get_x() + bar.get_width() / 2,  # X-coordinate (center of the bar)
+                        height,  # Y-coordinate (top of the bar)
+                        f"{height:.2f}",  # Label text (formatted to 2 decimal places)
+                        ha="center",  # Horizontal alignment
+                        va="bottom",  # Vertical alignment
+                        fontsize=10  # Font size
+                    )
+
                 # Customize the chart
                 ax.set_ylabel("Critical Flow Rate (STB/d)")
                 ax.set_xlabel("Method")
